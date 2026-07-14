@@ -1,0 +1,25 @@
+name: miner-proxy
+
+services:
+  miner-proxy:
+    image: miner-proxy:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    network_mode: host
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+      - miner-proxy-data:/app/data
+    restart: unless-stopped
+    read_only: true
+    tmpfs: [/tmp]
+    security_opt: [no-new-privileges:true]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://127.0.0.1:18080/api/health >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 15s
+
+volumes:
+  miner-proxy-data:

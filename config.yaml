@@ -1,0 +1,71 @@
+# miner-proxy 模板配置。
+# 这里配置矿机入口、上游矿池、运营者收款钱包、管理后台、存储、安全和日志。
+
+server:
+  # Stratum 监听地址，矿机需要连接到这个地址。
+  listen: "0.0.0.0:3333"
+  # Web 管理后台监听地址。
+  web_listen: "0.0.0.0:18080"
+  # 对外展示或反向代理使用的公开访问地址；不需要时留空。
+  public_url: ""
+
+coin:
+  # 币种适配器名称，当前版本支持 pearl/PRL。
+  adapter: "pearl"
+  # 面板展示的币种符号。
+  symbol: "PRL"
+  # 面板展示的算法名称。
+  algorithm: "pearlhash"
+
+pool:
+  # 上游真实矿池名称，仅用于面板展示和日志识别。
+  name: "kryptex-hk"
+  # 上游真实矿池地址；矿机不直接连接这里，而是连接 server.listen。
+  url: "prl-hk.kryptex.network:7048"
+  # 上游矿池是否使用 TLS。
+  tls: false
+  # 备用上游矿池地址列表，主矿池失败时用于后续切换。
+  backup_urls: []
+
+fee:
+  operator:
+    # 运营者自定义抽水比例，0 表示关闭运营者抽水。
+    percent: 0.00
+    # 运营者抽水收款钱包；percent 大于 0 时必须填写。
+    wallet: ""
+
+admin:
+  # Web 管理后台登录用户名。
+  username: "admin"
+  # Web 管理后台登录密码；首次部署必须修改。
+  password: "change-me"
+
+storage:
+  # 存储后端：默认 sqlite；mysql 预留给更大规模部署。
+  driver: "sqlite"
+  # SQLite 数据库文件路径，仅在 driver=sqlite 时使用。
+  sqlite_path: "data/miner-proxy.db"
+  # MySQL DSN，仅在 driver=mysql 时使用。
+  mysql_dsn: ""
+
+security:
+  # 单个 IP 允许的最大并发矿机连接数。
+  max_conn_per_ip: 50
+  # 单个 IP 每秒允许的新建连接数。
+  rate_limit_per_ip: 10
+  # IP 白名单；为空表示不启用白名单限制。
+  allow_ips: []
+  # IP 黑名单；命中后直接拒绝连接。
+  deny_ips: []
+
+log:
+  # 日志级别：debug、info、warn、error。
+  level: "info"
+  # 日志目录，程序会按日期在该目录下写入日志。
+  dir: "data/logs"
+  # 每日日志文件名。
+  filename: "miner-proxy.log"
+  # 日志保留天数。
+  max_keep_days: 7
+  # 是否同时输出到控制台。
+  console: true

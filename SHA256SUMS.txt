@@ -1,0 +1,3 @@
+5cc3893a646369c39e9fd61d5d6245908e378e3ae61c1ef95fc65c2a4bd11c8f  miner-proxy-linux-amd64
+561dda4f0c35ca9abf36c3f992b84d8ea9cfd5ccfd77319a45d470652ac10a7a  miner-proxy-linux-arm64
+de88bc99b7ae9fde7d621efa608c40b9da4f9b14868912f4113c310f2bddaff5  miner-proxy-windows-amd64.exe
