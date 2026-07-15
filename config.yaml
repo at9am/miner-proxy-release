@@ -4,6 +4,17 @@
 server:
   # Stratum 监听地址，矿机需要连接到这个地址。
   listen: "0.0.0.0:3333"
+  # TLS Stratum 监听地址；程序自动申请并续期下方 domain 对应的可信证书。
+  tls_listen: "0.0.0.0:3443"
+  tls:
+    # 矿机使用 stratum+ssl 连接的域名。
+    domain: "REPLACE_WITH_TLS_DOMAIN"
+    acme:
+      # Let’s Encrypt 到期通知邮箱。
+      email: "REPLACE_WITH_ACME_EMAIL"
+      # 阿里云 RAM 用户的 AliDNS AccessKey，用于 DNS-01 验证。
+      access_key_id: "REPLACE_WITH_ALICLOUD_ACCESS_KEY_ID"
+      access_key_secret: "REPLACE_WITH_ALICLOUD_ACCESS_KEY_SECRET"
   # Web 管理后台监听地址。
   web_listen: "0.0.0.0:18080"
   # 对外展示或反向代理使用的公开访问地址；不需要时留空。
@@ -19,9 +30,9 @@ coin:
 
 pool:
   # 上游真实矿池名称，仅用于面板展示和日志识别。
-  name: "kryptex-hk"
+  name: "REPLACE_WITH_POOL_NAME"
   # 上游真实矿池地址；矿机不直接连接这里，而是连接 server.listen。
-  url: "prl-hk.kryptex.network:7048"
+  url: "REPLACE_WITH_POOL_HOST:PORT"
   # 上游矿池是否使用 TLS。
   tls: false
   # 备用上游矿池地址列表，主矿池失败时用于后续切换。
@@ -50,9 +61,9 @@ storage:
 
 security:
   # 单个 IP 允许的最大并发矿机连接数。
-  max_conn_per_ip: 50
+  max_conn_per_ip: 500
   # 单个 IP 每秒允许的新建连接数。
-  rate_limit_per_ip: 10
+  rate_limit_per_ip: 100
   # IP 白名单；为空表示不启用白名单限制。
   allow_ips: []
   # IP 黑名单；命中后直接拒绝连接。
